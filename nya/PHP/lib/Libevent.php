@@ -4,7 +4,7 @@
  * 将Libevent封装的一个简单类
  */
 
-namespace core;
+namespace lib;
 
 class Libevent
 {

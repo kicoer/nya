@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace lib;
 
 // util工具类 关于 websocket
 
