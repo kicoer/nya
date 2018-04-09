@@ -6,42 +6,38 @@ var users = [];
 var eve = {
     login: function(data){
         // 处理所有用户列表
-        // {uid:uid, uli:[[id, name, img] ... ]}
-        console.log(data);
+        // {u: uuid, a: [uuid_name_img, uuid_name_img ...]}
+        console.log(data)
     },
     online: function(data){
         // 处理用户上线
-        // {"uid":11,"name":"nya","img":"def"}
-        console.log(data);
+        // {u: uuid, a: [name, img]}
+        console.log(data)
     },
     offline: function(data){
         // 处理用户下线
-        // {"uid":11}
-        console.log(data);
+        // {u: uuid, a: []}
+        console.log(data)
     },
     message: function(data){
         // 处理某用户发送消息
-        // {uid: 11, data:'...'}
-        console.log(data);
+        // {u: uuid, a: [massage]}
+        console.log(data)
     }
 }
-
-var ws = new WebSocket("ws://k:2333")
+// 登录 name:用户名 img:头像
+var ws = new WebSocket("ws://127.0.0.1:2333/ws?name=kicoe&img=nya")
 var all = 0;
 ws.onopen = function(){
-    
+    // ++ 关闭事件
 };
 ws.onmessage = function(e){
     console.log(e.data);
     var data = JSON.parse(e.data)
-    eve[data.e](data.a)
+    eve[data.E](data.A)
 };
-// 登录
-function login(name, img){
-    ws.send('{"c":"login","a":["'+name+'","'+img+'"]}')
-}
 // 向某用户发送消息
 function send(id, message){
-    ws.send('{"c":"send","a":"['+id+',"'+message+'"]"}')
+    ws.send('{"c":"send","a":{"u":'+id+',"a":["'+message+'"]}}')
 }
 </script>
