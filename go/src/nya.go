@@ -7,6 +7,7 @@ package main
 import (
 	"time"
 	ws "github.com/gorilla/websocket"
+	"lo"
 )
 
 type Nya struct {
@@ -67,6 +68,7 @@ func (n *Nya) Reading() {
 		_, message, err := n.conn.ReadMessage()
 		if err != nil {
 			// 错误处理++
+			lo.Instance.Info("Error", err)
 			break
 		}
 		n.send = message
@@ -76,5 +78,5 @@ func (n *Nya) Reading() {
 
 func (n *Nya) Close() {
 	n.conn.Close()
-	route.So(n.uuid)
+	SignOut(n.uuid)
 }

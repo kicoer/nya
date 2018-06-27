@@ -37,13 +37,21 @@ func (u *user) Rem(uuid int) bool {
 		return false
 	}
 }
-
+// 推送单用户
 func (u *user) Push(uuid int, msg []byte) {
 	u.users[uuid].recv <- msg
 }
-
+// 推送所有用户
 func (u *user) PushAll(msg []byte) {
-	for _, i := range(u.users) {
-		i.recv <- msg
+	for _, n := range(u.users) {
+		n.recv <- msg
+	}
+}
+// 推送处某某之外的所有用户
+func (u *user) PushAllNos(msg []byte, uid int) {
+	for i, n := range(u.users) {
+		if i!=uid {
+			n.recv <- msg
+		}
 	}
 }
