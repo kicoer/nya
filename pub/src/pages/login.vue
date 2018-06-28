@@ -23,16 +23,6 @@ export default {
     }
   },
   methods: {
-    qq() {
-      this.pla = 'QQ'
-      this.sty.g = {}
-      this.sty.qaq = {opacity: 1}
-    },
-    ava() {
-      this.pla = 'Email'
-      this.sty.qaq = {}
-      this.sty.g = {opacity: 1}
-    },
     // 根据URL获取用户头像
     next_get() {
       if(this.name != "") {
@@ -42,17 +32,21 @@ export default {
           this.$message.error('名字中不能包含特殊字符呢')
           return
         }
-        this.$router.push('/chat/'+this.name+'/'+encodeURIComponent(this.url))
+        this.$router.push('/chat/'+this.name+'/'+encodeURIComponent(this.url)+'/,')
         return
       }
       this.$message.error('请点填写用户名')
     }
   },
   created: function() {
-    API.get(Config.web_url+'/nya?'+this.$route.params['url']).then(response => {
-      this.url = response.data
-      this.loading = false
-    })
+    if(this.$route.params['url'].substring(0,2) != "m="){
+      this.url = this.$route.params['url']
+    } else {
+      API.get(Config.web_url+'/nya?'+this.$route.params['url']).then(response => {
+        this.url = response.data
+      })
+    }
+    this.loading = false
   }
 }
 </script>

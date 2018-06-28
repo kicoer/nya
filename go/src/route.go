@@ -69,6 +69,7 @@ func Send(uuid int, msg []byte) {
     err := json.Unmarshal(msg, &rc)
     if err != nil {
         lo.Instance.Info("Error", err)
+        return
     }
     // 构造消息
     rs.Att.User = uuid
@@ -81,6 +82,7 @@ func Send(uuid int, msg []byte) {
             b, err := json.Marshal(rs)
             if err != nil {
                 lo.Instance.Info("Error", err)
+                return
             }
             uu.Push(rc.Att.User, b)
         }
@@ -91,6 +93,7 @@ func Send(uuid int, msg []byte) {
             b, err := json.Marshal(rs)
             if err != nil {
                 lo.Instance.Info("Error", err)
+                return
             }
             uu.PushAllNos(b, uuid)
         }
@@ -119,6 +122,7 @@ func Login(nya *Nya) {
     b, err := json.Marshal(rs)
     if err != nil {
         lo.Instance.Info("Error", err)
+        return
     }
     // 处该用户外全部推送
     uu.PushAllNos(b, nya.uuid)
@@ -135,6 +139,7 @@ func Login(nya *Nya) {
     c, err := json.Marshal(rs2)
     if err != nil {
         lo.Instance.Info("Error", err)
+        return
     }
     uu.Push(nya.uuid, c)
 }

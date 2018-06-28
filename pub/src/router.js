@@ -14,7 +14,7 @@ const routes = [
         component: Login
     },
     {
-        path: "/chat/:name/:img",
+        path: "/chat/:name/:img/:f",
         component: Chat
     },
     {

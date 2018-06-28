@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       url: '',
-      pla: '请选择头像格式啦！',
+      pla: 'http://自定义头像URL',
       sty: {
         qaq: {},
         g: {}
@@ -24,11 +24,21 @@ export default {
   },
   methods: {
     qq() {
+      if(this.pla == 'QQ'){
+        this.pla = 'http://自定义头像URL'
+        this.sty.qaq = {}
+        return
+      }
       this.pla = 'QQ'
       this.sty.g = {}
       this.sty.qaq = {opacity: 1}
     },
     ava() {
+      if(this.pla == 'Email'){
+        this.pla = 'http://自定义头像URL'
+        this.sty.g = {}
+        return
+      }
       this.pla = 'Email'
       this.sty.qaq = {}
       this.sty.g = {opacity: 1}
@@ -45,7 +55,7 @@ export default {
         if(qq_reg.test(this.url)) {
           this.$router.push('/login/'+'m=q&u='+this.url)
         } else {
-          this.$message.error('请填写正确的qq')
+          this.$message.error('请填写正确的qq号码')
         }
         return
       }
@@ -57,7 +67,7 @@ export default {
         }
         return
       }
-      this.$message.error('请点击选择头像格式呢')
+      this.$router.push('/login/'+encodeURIComponent(this.url))
     },
     //async 
   }

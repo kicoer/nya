@@ -1,9 +1,28 @@
 <template>
   <div class="chat">
     <el-container>
+    <el-dialog
+      :visible.sync="img_edit"
+      width="30%"
+      center
+      :show-close="false"
+      >
+      <el-input
+        type="textarea"
+        :rows="img_list.length"
+        placeholder="请输入内容"
+        v-model="img_list_string"
+        >
+      </el-input>
+      <div class="img-check">
+        <el-button size="mini" type="success" icon="el-icon-check" @click="imgSet()"></el-button>
+        <el-button size="mini" type="danger" icon="el-icon-close" @click="img_edit=false"></el-button>
+      </div>
+    </el-dialog>
+
     <el-aside width="200px" class="left">
       <div class="i"><img class="im" :src="img"><a class="in">{{name}}</a></div>
-      <div @click="checkIt(0)" class="home li"><i class="im el-icon-menu"></i><a class="in">群聊</a></div>
+      <div @click="checkIt(0)" :class="[to_uid==0?'select':'','home','li']"><i class="ic el-icon-menu"></i><a class="in">群聊</a></div>
       <ul>
         <li @click="checkIt(info[0])" v-for="info in user_list" :class="[to_uid==info[0]?'select':'','li']" ><img class="im" :src="info[2]"><a class="in">{{info[1]}}<el-badge class="msg-bad" :value="info[3]" /></a></li>
       </ul>
@@ -22,20 +41,52 @@
           width="265"
           v-model="pop"
           trigger="click">
+
           <div class="imgs">
             <img @click="imgDump(i)" v-for="i in img_list" :src="i">
           </div>
+          <div class="img-edit">
+            <el-button @click="imgEdit()" icon="el-icon-edit"></el-button>
+          </div>
+
           <i slot="reference" class="el-icon-picture ic"></i>
         </el-popover>
         <el-input class="inpu" @keyup.enter.native="send" v-model="input" placeholder="请输入内容"></el-input>
         <el-button @click="send" size="small">发送</el-button>
       </div>
     </el-main>
+    <i class="el-icon-share share" @click="share"></i>
     </el-container>
   </div>
 </template>
 
 <style>
+.share{
+  height: 10px;
+  cursor: pointer
+}
+.share :hover{
+}
+.el-dialog__header {
+    padding: 0;
+}
+.el-dialog--center .el-dialog__body {
+  padding: 0 0 10px;
+}
+.el-dialog__headerbtn {
+  top: 5px;
+  right: 5px;
+}
+.img-check{
+  margin-top: 10px;
+  text-align: center
+}
+.img-edit{
+  text-align: center
+}
+.img-edit button{
+  padding: 4px 20px
+}
 .imgs img{
   padding: 2px;
   width:60px;
@@ -61,7 +112,7 @@
 }
 .msg .time{
   font-size: 12px;
-  margin-left: 7px;
+  margin-left: 6px;
 }
 .msg .text{
   padding: 4px 6px
@@ -132,7 +183,7 @@ ul{
 .li {
   height: 35px;
   display: block;
-  padding: 2px 10px;
+  padding: 3px 10px;
   cursor: pointer;
 }
 .select{ background-color:#eee }
@@ -142,10 +193,16 @@ ul{
   background-color:#eee;
 }
 .li .im{
-  padding: 4px 5px;
+  padding: 2px 5px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+.li .ic{
+  float: left;
+  position: relative;
+  top: 12px;
+  left: 11px;
 }
 .li .in{
   color: #555
@@ -190,18 +247,44 @@ export default {
       message_list:[
         // [id, msg, time]
       ],
-      img_list: Config.img_list,
+      img_list: [],
+      img_list_string: "",
+      img_edit: false,
       pop: false
     }
   },
   //每次页面渲染完之后滚动条在最底部
   updated:function(){
     this.$nextTick(function(){
-    var div = document.getElementById('ch');
-      div.scrollTop = div.scrollHeight;
+      var div = document.getElementById('ch')
+      div.scrollTop = div.scrollHeight
     })
   },
   methods: {
+    share: function(){
+      var localhostPaht = window.location.href.substring(0, window.location.href.indexOf(window.location.pathname));
+      var url = localhostPaht+'/chat/'+encodeURIComponent(this.name)+'/'+encodeURIComponent(this.img)+'/'+encodeURIComponent(this.img_list.join(','))
+      this.$alert('<textarea id="share" class="el-textarea__inner">'+url+'</textarea>', 'link', {
+        confirmButtonText: 'Copy',
+        dangerouslyUseHTMLString: true
+      }).then(() => {
+        document.getElementById('share').select()
+        document.execCommand("Copy")
+        this.$message({
+          type: 'success',
+          message: '个人URL成功复制到粘贴板'
+        })
+      }).catch(()=>{})
+      
+    },
+    imgEdit: function(){
+      this.img_edit = true
+      this.img_list_string = this.img_list_parse
+    },
+    imgSet: function(){
+      this.img_list = this.img_list_string.split("\n")
+      this.img_edit = false
+    },
     // 图片
     imgDump: function(img_url){
       this.input = '![]('+img_url+')'
@@ -316,6 +399,11 @@ export default {
     }
   },
   created() {
+    if(this.$route.params['f'] == ','){
+      this.img_list = Config.img_list
+    } else {
+      this.img_list = this.$route.params['f'].split(',')
+    }
     this.name = this.$route.params['name']
     this.img = decodeURIComponent(this.$route.params['img'])
     // 连接websocket
@@ -328,7 +416,9 @@ export default {
     }
   },
   computed: {
-
+    img_list_parse: function() {
+      return this.img_list.join("\n")
+    }
   }
 }
 </script>
