@@ -124,7 +124,7 @@ func Login(nya *Nya) {
         lo.Instance.Info("Error", err)
         return
     }
-    // 处该用户外全部推送
+    // 除该用户外全部推送
     uu.PushAllNos(b, nya.uuid)
     var rs2 Response
     rs2.Event = "login"

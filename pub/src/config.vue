@@ -1,17 +1,13 @@
 <script>
-    var web_url = "http://im.moonprism.cc:2333"
-    var ws_url = "ws://im.moonprism.cc:2333"
+    var web_url = "http://127.0.0.1:2333"
+    var ws_url = "ws://127.0.0.1:2333"
     var img_list = [
-                        "/static/img/i1.png",
-                        "/static/img/i2.png",
-                        "/static/img/i3.png",
-                        "/static/img/i4.png",
-                        "/static/img/i5.png",
-                        "/static/img/i6.png",
-                        "/static/img/i7.png",
-                        "/static/img/i8.png",
-                        "/static/img/i9.png",
-                        "/static/img/i10.png"
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i9.png",
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i3.png",
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i8.png",
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i10.png",
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i7.png",
+                    "http://7xk6io.com1.z0.glb.clouddn.com/em/i2.png",
                     ]
     export default {
         web_url,

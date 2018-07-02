@@ -47,7 +47,7 @@ func (u *user) PushAll(msg []byte) {
 		n.recv <- msg
 	}
 }
-// 推送处某某之外的所有用户
+// 推送除其之外的所有用户
 func (u *user) PushAllNos(msg []byte, uid int) {
 	for i, n := range(u.users) {
 		if i!=uid {

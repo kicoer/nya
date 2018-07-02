@@ -1,5 +1,6 @@
 package lo
 // 日志模块
+// ...还没想好怎么写
 
 import (
 	"os"

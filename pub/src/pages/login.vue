@@ -36,17 +36,31 @@ export default {
         return
       }
       this.$message.error('请点填写用户名')
+    },
+    loadI(isrc) {
+      var img = new Image()
+      img.src = isrc
+      img.onerror = () => {
+        img.src = 'http://kicoe.com/favicon.ico'
+        this.loading = false
+      }
+      img.onload = () => {
+        this.url = img.src
+        this.loading = false
+      }
     }
   },
   created: function() {
+    var isrc = ''
     if(this.$route.params['url'].substring(0,2) != "m="){
-      this.url = this.$route.params['url']
+      isrc = this.$route.params['url']
+      this.loadI(isrc)
     } else {
       API.get(Config.web_url+'/nya?'+this.$route.params['url']).then(response => {
-        this.url = response.data
+        isrc = response.data
+        this.loadI(isrc)
       })
     }
-    this.loading = false
   }
 }
 </script>

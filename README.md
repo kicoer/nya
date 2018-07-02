@@ -1,14 +1,14 @@
 # nya
 
-基于websocket的即时聊天系统
+基于websocket的web即时聊天系统
 
 后端使用Golang，前端使用vue+element-ui
 
-### 编译
+### 构建
 
 #### 后端
 
-首先设置`GOPATH`环境变量为系统下项目中`go`目录路径
+首先设置`GOPATH`环境变量为系统下项目中`go`目录路径 `export GOPATH=/nya/go`
 
 引入websocket解析器：
 ```shell

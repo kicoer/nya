@@ -24,7 +24,7 @@
       <div class="i"><img class="im" :src="img"><a class="in">{{name}}</a></div>
       <div @click="checkIt(0)" :class="[to_uid==0?'select':'','home','li']"><i class="ic el-icon-menu"></i><a class="in">群聊</a></div>
       <ul>
-        <li @click="checkIt(info[0])" v-for="info in user_list" :class="[to_uid==info[0]?'select':'','li']" ><img class="im" :src="info[2]"><a class="in">{{info[1]}}<el-badge class="msg-bad" :value="info[3]" /></a></li>
+        <li @click="checkIt(info[0])" v-for="info in user_list" :class="[to_uid==info[0]?'select':'','li']" ><img class="im" :src="info[2]"><a class="in">{{info[1]}}<el-badge class="msg-bad" :value="info[3]==0?false:info[3]" /></a></li>
       </ul>
     </el-aside>
     <el-main class="right">
@@ -183,15 +183,15 @@ ul{
 .li {
   height: 35px;
   display: block;
-  padding: 3px 10px;
+  padding: 4px 10px 3px;
   cursor: pointer;
 }
 .select{ background-color:#eee }
 .select :hover{ background-color:#eee }
 .new .in{ color:red!important }
-.li :hover{
+/*?? .li :hover{
   background-color:#eee;
-}
+} */
 .li .im{
   padding: 2px 5px;
   width: 30px;
@@ -216,7 +216,7 @@ ul{
 .in {
   white-space:nowrap;
   display: block;
-  padding: 9px 25px 10px 50px;
+  padding: 9px 25px 5px 50px;
   font-size: 15px;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
