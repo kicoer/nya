@@ -185,6 +185,7 @@ ul{
   display: block;
   padding: 4px 10px 3px;
   cursor: pointer;
+  border-radius: 2px
 }
 .select{ background-color:#eee }
 .select :hover{ background-color:#eee }
@@ -216,9 +217,16 @@ ul{
 .in {
   white-space:nowrap;
   display: block;
-  padding: 9px 25px 5px 50px;
+  padding: 9px 25px 7px 50px;
   font-size: 15px;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+.li :hover{
+  background-color: #f4f4f4;
+  border-radius: 5px
+}
+.select :hover{
+  background-color: #eee;
 }
 </style>
 
@@ -313,11 +321,12 @@ export default {
     send: function() {
       if (this.input == '') return
       //this.message_map[this.to_uid].push([this.uid, this.input])
+      var message_text = this.input.replace(/\\/g, "\\\\").replace(/"/g, '\\"')
       this.message_list.push([this.uid, this.input, this.getTime()])
       if(this.to_uid==0)
-        this.ws.send('{"c":"broadcast","a":{"u":'+this.to_uid+',"a":["'+this.input+'"]}}')
+        this.ws.send('{"c":"broadcast","a":{"u":'+this.to_uid+',"a":["'+message_text+'"]}}')
       else
-        this.ws.send('{"c":"send","a":{"u":'+this.to_uid+',"a":["'+this.input+'"]}}')
+        this.ws.send('{"c":"send","a":{"u":'+this.to_uid+',"a":["'+message_text+'"]}}')
       this.input = ''
     },
     login: function(data) {
