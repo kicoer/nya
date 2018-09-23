@@ -2,8 +2,8 @@
   <div class="index">
     <div class="typo-PingFang tit"><i class="el-icon-picture-outline"></i>获取头像</div>
     <div class="icon">
-      <img src="../assets/qq.jpg" @click="qq" v-bind:style="sty.qaq">
-      <img  src="../assets/gv.jpg" @click="ava" v-bind:style="sty.g">
+      <img src="@/assets/qq.jpg" @click="qq" v-bind:style="sty.qaq">
+      <img  src="@/assets/gv.jpg" @click="ava" v-bind:style="sty.g">
     </div>
     <div class="head-url"><el-input :placeholder="pla" v-model="url" @keyup.enter.native="next_get" ></el-input></div>
     <div class="next"><el-button size="small" @click="next_get">下一步</el-button></div>

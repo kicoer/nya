@@ -231,7 +231,7 @@ ul{
 </style>
 
 <script>
-import Config from "../config"
+import {img_list, ws_url} from "@/config/web"
 export default {
   data() {
     return {
@@ -409,14 +409,14 @@ export default {
   },
   created() {
     if(this.$route.params['f'] == ','){
-      this.img_list = Config.img_list
+      this.img_list = img_list
     } else {
       this.img_list = this.$route.params['f'].split(',')
     }
     this.name = this.$route.params['name']
     this.img = decodeURIComponent(this.$route.params['img'])
     // 连接websocket
-    this.ws = new WebSocket(Config.ws_url+"/ws?name="+this.name+"&img="+this.$route.params['img'])
+    this.ws = new WebSocket(ws_url+"/ws?name="+this.name+"&img="+this.$route.params['img'])
     var that = this
     this.ws.onmessage = function(e) {
       console.log(e.data);

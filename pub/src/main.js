@@ -1,15 +1,19 @@
 import Vue from 'vue'
-import Element from 'element-ui'
+import App from './App.vue'
+import axios from 'axios'
+
+import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import App from './app.vue'
 
-Vue.use(Element, { size: 'small' })
+Vue.use(ElementUI, { size: 'small' })
 
-// 载入路由
-import router from './router.js'
+Vue.prototype.$axios = axios
+
+import router from './router'
+
+Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
   router,
   render: h => h(App)
-})
+}).$mount('#app')

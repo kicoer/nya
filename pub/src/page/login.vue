@@ -13,7 +13,7 @@
 
 <script>
 import API from "axios"
-import Config from "../config"
+import {web_url} from "@/config/web"
 export default {
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
       isrc = this.$route.params['url']
       this.loadI(isrc)
     } else {
-      API.get(Config.web_url+'/nya?'+this.$route.params['url']).then(response => {
+      API.get(web_url+'/nya?'+this.$route.params['url']).then(response => {
         isrc = response.data
         this.loadI(isrc)
       })
